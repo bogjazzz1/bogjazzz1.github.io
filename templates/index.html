@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChangeYourHeroes</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #343a40;
+            padding-top: 40px;
+            background-image: url('https://images.unsplash.com/photo-1508625935447-e0ebc2cdf6bf?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzJ8fGplZmlzaHxlbnwwfHwwfHx8fDA%3D');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(40, 40, 40, 0.9);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #4169E1;
+        }
+        label {
+            font-weight: bold;
+            color: #4169E1;
+        }
+        input[type="text"], input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #4169E1;
+            border-radius: 5px;
+            box-sizing: border-box;
+            background-color: #333;
+            color: #f8f9fa;
+            margin-bottom: 20px;
+        }
+        input[type="text"]:focus, input[type="file"]:focus {
+            border: 1px solid #007bff;
+            background-color: #333;
+            color: #f8f9fa;
+        }
+        .custom-file-upload {
+            display: inline-block;
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+        .custom-file-upload:hover {
+            background-color: #0056b3;
+        }
+        input[type="file"] {
+            display: none;
+        }
+        .btn {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .description-info, .team-info {
+            margin-top: 30px;
+        }
+        .description-info h2, .team-info h2 {
+            font-size: 24px;
+            color: #4169E1;
+            cursor: pointer;
+        }
+        .description-info ul, .team-info ul {
+            font-size: 16px;
+            color: #007bff;
+            display: none;
+        }
+        .team-info ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .team-info ul li {
+            margin-bottom: 10px;
+        }
+        .qr-code {
+            margin-top: 20px;
+        }
+        .qr-code a img {
+            width: 70px;
+            height: auto;
+        }
+        .file-upload-status {
+            display: inline-block;
+            margin-left: 10px;
+            color: #4169E1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ChangeYourHeroes</h1>
+
+        <!-- Форма для ввода персонажей -->
+        <form method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="character_a">Старый Персонаж:</label>
+                <input type="text" id="character_a" name="character_a" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="character_b">Новый Персонаж:</label>
+                <input type="text" id="character_b" name="character_b" class="form-control">
+            </div>
+            <div class="form-group">
+                <div>
+                    <label class="custom-file-upload">
+                        <input type="file" id="text_file" name="text_file" onchange="handleFileUpload()">
+                        Выберите файл
+                    </label>
+                    <span id="file-upload-status" class="file-upload-status"></span>
+                </div>
+            </div>
+            <button type="submit" class="btn">Отправить</button>
+        </form>
+
+        <!-- Контакты и информация о команде -->
+        <div class="description-info">
+            <h2 class="description">Описание проекта</h2>
+            <ul class="hidden1">
+                <li>Наш проект заменяет персонажей в ваших любимых литературных произведениях!</li>
+                <li>1. Введите персонажа, которого вы хотите заменить в поле "Старый персонаж"</li>
+                <li>2. Введите персонажа, на которого вы хотите заменить старого в поле "Новый персонаж"</li>
+                <li>3. Загрузите текстовый файл.</li>
+                <li>Далее на ваш компьютер скачается готовое измененное литературное произведение с новыми персонажами.</li>
+            </ul>
+        </div>
+        <div class="team-info">
+            <h2 class="toggle-list">Наша команда</h2>
+            <ul class="hidden">
+                <li>Мамонтов Егор</li>
+                <li>Андриянов Эрик</li>
+                <li>Андрюшин Лев</li>
+                <li>Муратов Артем</li>
+                <li>Комбаров Владислав</li>
+                <li>Маслова Анастасия</li>
+                <li>Кудинов Денис</li>
+                <li>Модин-Глазков Богдан</li>
+            </ul>
+        </div>
+
+        <!-- QR-код с ссылкой на проект -->
+        <div class="qr-code">
+            <a href="https://github.com/TeoPlow/IT_project_jellyfish">
+                <img src="/static/qr-code.png">
+            </a>
+        </div>
+    </div>
+
+    <!-- Vue.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script>
+        new Vue({
+            el: '.container',
+            data: {
+                charA: '',
+                charB: '',
+                text: ''
+            }
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var toggleList = document.querySelector(".toggle-list");
+            var hiddenList = document.querySelector(".hidden");
+
+            toggleList.addEventListener("click", function () {
+                hiddenList.style.display = hiddenList.style.display === "none" ? "block" : "none";
+            });
+
+            var description = document.querySelector(".description");
+            var hiddenList1 = document.querySelector(".hidden1");
+
+            description.addEventListener("click", function () {
+                hiddenList1.style.display = hiddenList1.style.display === "none" ? "block" : "none";
+            });
+        });
+
+        function handleFileUpload() {
+            var fileInput = document.getElementById('text_file');
+            var fileUploadStatus = document.getElementById('file-upload-status');
+            if (fileInput.files.length > 0) {
+                fileUploadStatus.textContent = 'Файл загружен';
+            } else {
+                fileUploadStatus.textContent = '';
+            }
+        }
+    </script>
+</body>
+</html>
